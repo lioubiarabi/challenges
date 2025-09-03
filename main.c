@@ -31,9 +31,26 @@ void add() {
 
 void deleteBook() {
     printf("--- adding book ---\n");
+    
 }
 void update() {
-    printf("--- adding book ---\n");
+    printf("--- update books quantite ---\n");
+    int choose;
+    for(int i = 0; i<n; i++){
+        printf("%d. %s", i+1, title[i] );
+    }
+    printf("choose a number from the list: ");
+    scanf("%d", &choose);
+    while(1){
+        if(choose<0 || choose>n){
+            printf("incorrect");
+            continue;
+        } else {
+            printf("enter the new quantite: ");
+            scanf("%d", &quantite[choose-1]);
+            break;
+        }
+    }
 }
 void showQuantite() {
     printf("--- adding book ---\n");
