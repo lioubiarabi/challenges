@@ -17,7 +17,16 @@ int show(){
 }
 
 void add() {
-    printf("--- adding book ---\n");
+    printf("--- adding a new book ---\n");
+    printf("enter the book's name: ");
+    scanf("%99[^\n]", title[n]);
+    printf("enter the book's writer name: ");
+    scanf("%99[^\n]", auteur[n]);
+    printf("enter the new book price: ");
+    scanf("%d", &prix[n]);
+    printf("enter the new book quantite: ");
+    scanf("%d", &quantite[n]);
+    printf("well done\n");
 }
 
 void deleteBook() {
