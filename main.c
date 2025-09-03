@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 char title[50][200];
 char auteur[50][200];
@@ -30,8 +31,28 @@ void add() {
 }
 
 void deleteBook() {
-    printf("--- adding book ---\n");
-    
+    printf("--- delete a book ---\n");
+    int choose;
+    for(int i = 0; i<n; i++){
+        printf("%d. %s", i+1, title[i] );
+    }
+    printf("choose a number from the list: ");
+    scanf("%d", &choose);
+    while(1){
+        if(choose<0 || choose>n){
+            printf("incorrect");
+            continue;
+        } else {
+            for(int j=choose-1; j<n; j++){
+                strcpy(title[j], title[j+1]);
+                strcpy(auteur[j], auteur[j+1]);
+                prix[j] = prix[j+1];
+                quantite[j] = quantite[j+1];
+            }
+            printf("done");
+            break;
+        }
+    }
 }
 void update() {
     printf("--- update books quantite ---\n");
