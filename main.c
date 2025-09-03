@@ -82,7 +82,18 @@ void showQuantite() {
     printf("we have %d books in the library\n", totale);
 }
 void search() {
-    printf("--- adding book ---\n");
+    printf("--- search for a book ---\n");
+    int result;
+    char bookTitle;
+    printf("enter the book title: ");
+    scanf("%99[^\n]", bookTitle);
+    for(int i ==0; i<n; i++){
+        if(strcmp(title[i], bookTitle) == 0 ){
+            result++;
+            printf("%s | %s | %d Dh | %d", title[i], auteur[i], prix[i], qhauntite[i]);
+        }
+        printf("we found %d books related", result);
+    }
 }
 void dashboard() {
     printf("--- dashboard ---\n");
