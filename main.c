@@ -49,7 +49,7 @@ void deleteBook() {
                 prix[j] = prix[j+1];
                 quantite[j] = quantite[j+1];
             }
-            printf("done");
+            printf("done\n");
             break;
         }
     }
@@ -74,7 +74,12 @@ void update() {
     }
 }
 void showQuantite() {
-    printf("--- adding book ---\n");
+    printf("--- quanite of all the books ---\n");
+    int totale=0;
+    for(int i =0; i<n; i++){
+        totale += quanite[i];
+    }
+    printf("we have %d books in the library\n", totale);
 }
 void search() {
     printf("--- adding book ---\n");
