@@ -96,9 +96,42 @@ void search() {
     }
 }
 void dashboard() {
-    printf("--- dashboard ---\n");
+    int choose;
+    while(1){
+        printf("\n--- dashboard ---\n");
+        printf("1. show all the books");
+        printf("2. add a new book");
+        printf("3. search for a book");
+        printf("4. update a book quantite");
+        printf("5. the quantite of all books");
+        printf("6. delete a book\n\n");
+        printf("choose a number from the list: ");
+        scanf("%d", &choose):
+        switch(choose){
+            case 1:
+                show()
+            break;
+            case 2:
+                add()
+            break;
+            case 3:
+                search()
+            break;
+            case 4:
+                update()
+            break;
+            case 5:
+                quantite()
+            break;
+            case 6:
+                deleteBook()
+            break;
+            default: printf("incorrect");
+        }
+    }
+
 }
 int main() {
-    
+    dashboard();
     return 0;
 }
