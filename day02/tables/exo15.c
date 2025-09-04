@@ -16,14 +16,12 @@ int main() {
         scanf("%d", &array2[i]);
     }
     int fusion[a+b];
-    for(int i =0; i<a+b; i++) {
         for(int i=0; i<a; i++){
             fusion[i]= array1[i];
         }
         for(int i=0; i<b; i++){
             fusion[a+i]= array2[i];
         }
-    }
     printf("showing the elements of the fusion table: \n");
     for(int i=0; i<a+b; i++){
         printf("%d\n", fusion[i]);
