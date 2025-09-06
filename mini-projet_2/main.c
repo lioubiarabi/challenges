@@ -11,9 +11,22 @@ struct contact {
         char name[50], email[50], number[50];
     };
 struct contact contacts[123];
-struct contact add(char *newName, char *newNumber, char *newEmail) {
+struct contact add() {
+    char newName[50], newNumber[50], newEmail[50];
     struct contact newContact;
-    
+    printf("--adding new contact--\n");
+    printf("enter the name: ");
+    fgets(newName, 50, stdin);
+    printf("enter the number: ");
+    fgets(newNumber, 50, stdin);
+    printf("enter the email: ");
+    fgets(newEmail, 50, stdin);
+    stringCopy(newContact.name, newName);
+    stringCopy(newContact.number, newNumber);
+    stringCopy(newContact.email, newEmail);
+    contacts[n]=newContact;
+    n++;
+    return newContact;
 }
 
 int main() {
@@ -27,9 +40,11 @@ int main() {
         printf("5.show all\n\n");
         printf("choose from the list: ");
         scanf("%d", &choose);
+        getchar();
         switch(choose){
             case 1:
-            
+                struct contact newContact = add();
+                printf("%s added with success\n\n", newContact.name);
             break;
             case 2:
             
