@@ -1,12 +1,23 @@
 #include <stdio.h>
+
+void stringCopy(char *first, char *second){
+    for (int i =0; second[i] != '\0' && second[i] != '\n'; i++){
+        first[i] = second[i];
+    }
+}
+
+int n=0;
 struct contact {
         char name[50], email[50], number[50];
     };
+struct contact contacts[123];
+struct contact add(char *newName, char *newNumber, char *newEmail) {
+    struct contact newContact;
+    
+}
 
 int main() {
     int choose;
-    struct contact contacts[123];
-    
     while(1){
         printf("---dashboard---\n");
         printf("1. add new contact\n");
