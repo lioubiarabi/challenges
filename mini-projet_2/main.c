@@ -111,9 +111,19 @@ struct contact modify(int i) {
     
     return editContact;
 }
+struct contact deleteContact(int i){
+    struct contact deleted = contacts[i];
+    for(int j=i; j<n; j++){
+        contacts[j]=contacts[j+1];
+        contacts[j].id = j;
+    }
+    n--;
+    return deleted;
+}
 
 int main() {
     int choose;
+    char confirm;
     while(1){
         printf("---dashboard---\n");
         printf("1. add new contact\n");
@@ -144,7 +154,7 @@ int main() {
                 else printf("we didn't found anything\n\n");
             break;
             case 3:
-                char modifName[50], confirm;
+                char modifName[50];
                 printf("enter a contact to modify: ");
                 fgets(modifName, 50, stdin);
                 struct search modiSearch = search(modifName);
@@ -181,6 +191,39 @@ int main() {
                 
             break;
             case 4:
+            char DeleteName[50];
+                printf("enter a contact to delete: ");
+                fgets(DeleteName, 50, stdin);
+                struct search DeleteSearch = search(DeleteName);
+                
+                if (DeleteSearch.number == 0)printf("can't find the contact: %s", DeleteName);
+                else if(DeleteSearch.number == 1){
+                    int id=DeleteSearch.results[0].id;
+                    printf("\n%-20s%-20s%-30s\n", "NAME", "NUMBER", "EMAIL");
+                    printf("-------------------------------------------------------------------\n");
+                    printf("%-20s%-20s%-30s\n", contacts[id].name, contacts[id].number, contacts[id].email);
+                    printf("do you wanna delete this contact [y/n]: ");
+                    scanf("%c", &confirm);
+                    if(confirm=='y' || confirm=='Y'){
+                        struct contact deleted = deleteContact(id);
+                        printf("%s deleted successfuly\n", deleted.name);
+                    } else break;
+                }
+                else {
+                    int choose;
+                    printf("\n%-5s%-20s%-20s%-30s\n","ID", "NAME", "NUMBER", "EMAIL");
+                    printf("-------------------------------------------------------------------\n");
+                    for(int i=0; i<DeleteSearch.number; i++){
+                    printf("%-5d%-20s%-20s%-30s\n", i+1, contacts[DeleteSearch.results[i].id].name, contacts[DeleteSearch.results[i].id].number, contacts[DeleteSearch.results[i].id].email);
+                    }
+                    
+                    while(choose <1 || choose >DeleteSearch.number){
+                        printf("choose one contact:");
+                        scanf("%d", &choose);
+                    }
+                    struct contact deleted = deleteContact(DeleteSearch.results[choose-1].id);
+                        printf("%s deleted successfuly\n", deleted.name);
+                }
             
             break;
             case 5:
