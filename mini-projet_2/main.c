@@ -19,13 +19,26 @@ int identic(char *first, char *second){
     }
 }
 
-int n=2;
+int n=9;
 struct contact {
         char name[50],number[50], email[50];
     };
-    // temporary contacts for testing
-struct contact contacts[123] = {{"lioubi arabi", "+212600000000", "lioubi@gmail.com"},
-{"oussama teammate", "+212600000000", "oussama@gmail.com"}};
+struct search {
+    int number;
+    struct contact results[123];
+};
+// temporary contacts for testing
+struct contact contacts[123] = {
+        {"lioubi arabi", "+212600000000", "lioubi@gmail.com"},
+        {"oussama teammate", "+212600000000", "oussama@gmail.com"},
+        {"Ayoub Ezzaim", "+212612345678", "ayoub.e@example.com"},
+        {"Fatima Zahra", "+212687654321", "fatima.z@example.com"},
+        {"Mohamed Amine", "+212655555555", "mohamed.a@example.com"},
+        {"Sara El Fassi", "+212644444444", "sara.f@example.com"},
+        {"Ayoub Ezzaim", "+212612zq678", "add.e@example.com"},
+        {"Youssef Benani", "+212633333333", "youssef.b@example.com"},
+        {"Khadija Alaoui", "+212622222222", "khadija.a@example.com"}
+    };
 struct contact add() {
     char newName[50], newNumber[50], newEmail[50];
     struct contact newContact;
@@ -58,26 +71,25 @@ int show() {
     printf("\n");
     return 1;
 } 
-void search(){
-    char search[50];
+struct search search(char *searchVal){
+    struct search newSearch;
     int trouve =0;
-    printf("enter the search: ");
-    fgets(search, 50, stdin);
-    printf("%-20s%-20s%-30s\n", "NAME", "NUMBER", "EMAIL");
-    printf("-------------------------------------------------------------------\n");
     for(int i = 0; i<n; i++){
-        if(identic(contacts[i].name, search)){
+        if(identic(contacts[i].name, searchVal)){
+            stringCopy(newSearch.results[trouve].name, contacts[i].name);
+            stringCopy(newSearch.results[trouve].number, contacts[i].number);
+            stringCopy(newSearch.results[trouve].email, contacts[i].email);
             trouve++;
-            printf("%-20s%-20s%-30s\n", contacts[i].name, contacts[i].number, contacts[i].email);
         }
     }
-    if(trouve) printf("\nwe found %d related search\n\n", trouve);
-    else printf("we didn't found anything\n\n");
+    newSearch.number=trouve;
+    
+    return newSearch;
+    
 }
 
 int main() {
     int choose;
-    printf("%d", identic("lioubi", "lioubi "));
     while(1){
         printf("---dashboard---\n");
         printf("1. add new contact\n");
@@ -94,7 +106,18 @@ int main() {
                 printf("%s added with success\n\n", newContact.name);
             break;
             case 2:
-                search();
+                char searchVal[50];
+                printf("enter the search: ");
+                fgets(searchVal, 50, stdin);
+                struct search theSearch = search(searchVal);
+                
+                printf("\n%-20s%-20s%-30s\n", "NAME", "NUMBER", "EMAIL");
+                printf("-------------------------------------------------------------------\n");
+                for(int i = 0; i<theSearch.number; i++){
+                    printf("%-20s%-20s%-30s\n", theSearch.results[i].name, theSearch.results[i].number, theSearch.results[i].email);
+                }
+                if(theSearch.number) printf("\nwe found %d related search\n\n", theSearch.number);
+                else printf("we didn't found anything\n\n");
             break;
             case 3:
             
