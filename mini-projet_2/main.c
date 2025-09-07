@@ -1,9 +1,11 @@
 #include <stdio.h>
 
 void stringCopy(char *first, char *second){
-    for (int i =0; second[i] != '\0' && second[i] != '\n'; i++){
+    int i =0;
+    for (i =0; second[i] != '\0' && second[i] != '\n'; i++){
         first[i] = second[i];
     }
+    first[i] = '\0';
 }
 int identic(char *first, char *second){
     int i=0, j=0;
@@ -91,6 +93,25 @@ struct search search(char *searchVal){
     
 }
 
+struct contact modify(int i) {
+    char newName[50], newNumber[50], newEmail[50];
+    getchar();
+    struct contact editContact;
+    printf("enter the new name: ");
+    fgets(newName, 50, stdin);
+    printf("enter the new number: ");
+    fgets(newNumber, 50, stdin);
+    printf("enter the new email: ");
+    fgets(newEmail, 50, stdin);
+    editContact.id = i;
+    stringCopy(editContact.name, newName);
+    stringCopy(editContact.number, newNumber);
+    stringCopy(editContact.email, newEmail);
+    contacts[i]=editContact;
+    
+    return editContact;
+}
+
 int main() {
     int choose;
     while(1){
@@ -123,7 +144,41 @@ int main() {
                 else printf("we didn't found anything\n\n");
             break;
             case 3:
-            
+                char modifName[50], confirm;
+                printf("enter a contact to modify: ");
+                fgets(modifName, 50, stdin);
+                struct search modiSearch = search(modifName);
+                
+                if (modiSearch.number == 0)printf("can't find the contact: %s", modifName);
+                else if(modiSearch.number == 1){
+                    int id=modiSearch.results[0].id;
+                    printf("\n%-20s%-20s%-30s\n", "NAME", "NUMBER", "EMAIL");
+                    printf("-------------------------------------------------------------------\n");
+                    printf("%-20s%-20s%-30s\n", contacts[id].name, contacts[id].number, contacts[id].email);
+                    printf("do you wanna edit this contact [y/n]: ");
+                    scanf("%c", &confirm);
+                    if(confirm=='y' || confirm=='Y'){
+                        struct contact edit = modify(id);
+                        printf("the contact edited with success as: %s\n", edit.name);
+                    } else break;
+                }
+                else {
+                    int choose;
+                    printf("\n%-5s%-20s%-20s%-30s\n","ID", "NAME", "NUMBER", "EMAIL");
+                    printf("-------------------------------------------------------------------\n");
+                    for(int i=0; i<modiSearch.number; i++){
+                    printf("%-5d%-20s%-20s%-30s\n", i+1, contacts[modiSearch.results[i].id].name, contacts[modiSearch.results[i].id].number, contacts[modiSearch.results[i].id].email);
+                    }
+                    
+                    while(choose <1 || choose >modiSearch.number){
+                        printf("choose one contact:");
+                        scanf("%d", &choose);
+                    }
+                    struct contact edit = modify(modiSearch.results[choose-1].id);
+                    printf("the contact edited with success as: %s\n", edit.name);
+                }
+                
+                
             break;
             case 4:
             
