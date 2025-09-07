@@ -21,6 +21,7 @@ int identic(char *first, char *second){
 
 int n=9;
 struct contact {
+        int id;
         char name[50],number[50], email[50];
     };
 struct search {
@@ -29,15 +30,15 @@ struct search {
 };
 // temporary contacts for testing
 struct contact contacts[123] = {
-        {"lioubi arabi", "+212600000000", "lioubi@gmail.com"},
-        {"oussama teammate", "+212600000000", "oussama@gmail.com"},
-        {"Ayoub Ezzaim", "+212612345678", "ayoub.e@example.com"},
-        {"Fatima Zahra", "+212687654321", "fatima.z@example.com"},
-        {"Mohamed Amine", "+212655555555", "mohamed.a@example.com"},
-        {"Sara El Fassi", "+212644444444", "sara.f@example.com"},
-        {"Ayoub Ezzaim", "+212612zq678", "add.e@example.com"},
-        {"Youssef Benani", "+212633333333", "youssef.b@example.com"},
-        {"Khadija Alaoui", "+212622222222", "khadija.a@example.com"}
+        {0,"lioubi arabi", "+212600000000", "lioubi@gmail.com"},
+        {1, "oussama teammate", "+212600000000", "oussama@gmail.com"},
+        {2, "Ayoub Ezzaim", "+212612345678", "ayoub.e@example.com"},
+        {3, "Fatima Zahra", "+212687654321", "fatima.z@example.com"},
+        {4, "Mohamed Amine", "+212655555555", "mohamed.a@example.com"},
+        {5, "Sara El Fassi", "+212644444444", "sara.f@example.com"},
+        {6, "Ayoub Ezzaim", "+212612zq678", "add.e@example.com"},
+        {7, "Youssef Benani", "+212633333333", "youssef.b@example.com"},
+        {8, "Khadija Alaoui", "+212622222222", "khadija.a@example.com"}
     };
 struct contact add() {
     char newName[50], newNumber[50], newEmail[50];
@@ -49,6 +50,7 @@ struct contact add() {
     fgets(newNumber, 50, stdin);
     printf("enter the email: ");
     fgets(newEmail, 50, stdin);
+    contacts[n].id = n;
     stringCopy(newContact.name, newName);
     stringCopy(newContact.number, newNumber);
     stringCopy(newContact.email, newEmail);
@@ -76,6 +78,7 @@ struct search search(char *searchVal){
     int trouve =0;
     for(int i = 0; i<n; i++){
         if(identic(contacts[i].name, searchVal)){
+            newSearch.results[trouve].id = contacts[i].id;
             stringCopy(newSearch.results[trouve].name, contacts[i].name);
             stringCopy(newSearch.results[trouve].number, contacts[i].number);
             stringCopy(newSearch.results[trouve].email, contacts[i].email);
