@@ -1,14 +1,22 @@
 #include <stdio.h>
 #include <string.h>
 
-int playersNumber=0;
+int playersNumber=5;
 int playerId =1000; 
 struct player {
-    int id, numero,age, buts;
-    char fullname[50], poste[50] ;
+    int id;
+    char fullname[50];
+    int age;
+    int numero;
+    char poste[50] ;
+    int buts;
     };
     
-struct player team[25];
+struct player team[25]={{1000, "Messi Lionel", 38, 10, "Attaquant", 823},
+        {1001, "Ronaldo Cristiano", 39, 7, "Attaquant", 895},
+        {1002, "Neymar Jr.", 32, 11, "Milieu offensif", 439},
+        {1003, "Mbappe Kylian", 25, 7, "Attaquant", 313},
+        {1004, "Haaland Erling", 24, 9, "Attaquant", 267}};
 
 struct player add() {
     char newName[50], newPoste[50];
@@ -33,7 +41,12 @@ struct player add() {
 }
 
 int affiche(){
-    
+    printf("--- showing all the players ---\n\n");
+    printf("%-10s%-25s%-10s%-10s%-10s\n", "ID", "Full Name", "Age", "Poste", "Buts");
+    printf("----------------------------------------------------------------\n");
+    for(int i=0; i<playersNumber; i++){
+        printf("%-10d%-25s%-10d%-10s%-10d\n", team[i].id, team[i].fullname, team[i].age, team[i].poste, team[i].buts);
+    }
 }
 
 
@@ -43,11 +56,11 @@ int main() {
     while(choose!=7){
         printf("--- dashboard ---\n");
         printf("1. Ajouter un joueur\n");
-        printf("1. Afficher la liste de tous les joueurs \n");
-        printf("1. Modifier un joueur\n");
-        printf("1. Supprimer un joueur\n");
-        printf("1. Rechercher un joueur\n");
-        printf("1. Statistiques \n");
+        printf("2. Afficher la liste de tous les joueurs \n");
+        printf("3. Modifier un joueur\n");
+        printf("4. Supprimer un joueur\n");
+        printf("5. Rechercher un joueur\n");
+        printf("6. Statistiques \n");
         printf("7. Quitter\n");
         
         printf("Choisissez un numéro: ");
