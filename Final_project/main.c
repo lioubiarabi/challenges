@@ -2,7 +2,7 @@
 #include <string.h>
 
 int playersNumber=5;
-int playerId =1000; 
+int playerId =1005; 
 struct player {
     int id;
     char fullname[50];
@@ -14,12 +14,13 @@ struct player {
     
 struct player team[25]={{1000, "Messi Lionel", 38, 10, "Attaquant", 823},
         {1001, "Ronaldo Cristiano", 39, 7, "Attaquant", 895},
-        {1002, "Neymar Jr.", 32, 11, "Milieu offensif", 439},
+        {1002, "Neymar Jr.", 32, 11, "Milieu ", 439},
         {1003, "Mbappe Kylian", 25, 7, "Attaquant", 313},
         {1004, "Haaland Erling", 24, 9, "Attaquant", 267}};
 
 struct player add() {
-    char newName[50], newPoste[50];
+    char newName[50];
+    int newPoste;
     printf("-- Ajouter un nouveau joueur --\n");
     printf("Entrez le nom complet du joueur: ");
     getchar();
@@ -30,23 +31,45 @@ struct player add() {
     printf("Enter le numeroMaillot: ");
     scanf("%d", &team[playersNumber].numero);
     getchar();
-    printf("Enter poste: (gardien, défenseur, milieu, attaquant): ");
-    scanf("%[^\n]", newPoste);
-    strcpy(team[playersNumber].poste, newPoste);
-    team[playersNumber].buts = 0;
+    printf("\n1. gardien\n2. défenseur\n3. milieu\n4. attaquant \n ");
+    
+    while(newPoste>4 || newPoste <1){
+        printf("Choose a number: ");
+        scanf("%d", &newPoste);
+    }
+    switch(newPoste){
+        case 1:
+            strcpy(team[playersNumber].poste, "gardien");
+        break;
+        case 2:
+            strcpy(team[playersNumber].poste, "défenseur");
+        break;
+        case 3:
+            strcpy(team[playersNumber].poste, "milieu");
+        break;
+        case 4:
+            strcpy(team[playersNumber].poste, "attaquant");
+        break;
+        
+    }
+    
+    printf("Enter all the player buts: ");
+    scanf("%d", &team[playersNumber].buts);
+    
     team[playersNumber].id = playerId;
     playerId++;
     playersNumber++;
-    return team[playersNumber];
+    return team[playersNumber-1];
 }
 
 int affiche(){
     printf("--- showing all the players ---\n\n");
-    printf("%-10s%-25s%-10s%-10s%-10s\n", "ID", "Full Name", "Age", "Poste", "Buts");
+    printf("%-10s%-25s%-10s%-15s%-10s\n", "ID", "Full Name", "Age", "Poste", "Buts");
     printf("----------------------------------------------------------------\n");
     for(int i=0; i<playersNumber; i++){
-        printf("%-10d%-25s%-10d%-10s%-10d\n", team[i].id, team[i].fullname, team[i].age, team[i].poste, team[i].buts);
+        printf("%-10d%-25s%-10d%-15s%-10d\n", team[i].id, team[i].fullname, team[i].age, team[i].poste, team[i].buts);
     }
+    return 0;
 }
 
 
