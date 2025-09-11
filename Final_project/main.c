@@ -45,16 +45,16 @@ struct player add() {
     }
     switch(newPoste){
         case 1:
-            strcpy(team[playersNumber].poste, "gardien");
+            strcpy(team[playersNumber].poste, "Gardien");
         break;
         case 2:
-            strcpy(team[playersNumber].poste, "defenseur");
+            strcpy(team[playersNumber].poste, "Defenseur");
         break;
         case 3:
-            strcpy(team[playersNumber].poste, "milieu");
+            strcpy(team[playersNumber].poste, "Milieu");
         break;
         case 4:
-            strcpy(team[playersNumber].poste, "attaquant");
+            strcpy(team[playersNumber].poste, "Attaquant");
         break;
         
     }
@@ -94,7 +94,7 @@ int sort_by_name(){
 int sort_by_age(){
     struct player temp;
     for(int i=0; i<playersNumber-1; i++){
-        for(int j=0; j<playersNumber-1-j; j++ ){
+        for(int j=0; j<playersNumber-1-i; j++ ){
             if(team[j].age > team[j+1].age){
                 temp = team[j];
                 team[j] = team[j+1];
@@ -112,16 +112,33 @@ int sort_by_age(){
     }
 
 int sort_by_post(int poste){
-    int count;
+    int count=0;
+    char playerPost[50];
+    switch(poste){
+            case 1:
+                strcpy(playerPost, "Gardien");
+            break;
+            case 2:
+                strcpy(playerPost, "Defenseur");
+            break;
+            case 3:
+                strcpy(playerPost, "Milieu");
+            break;
+            case 4:
+                strcpy(playerPost, "Attaquant");
+            break;
+            
+        }
     printf("\n%-10s%-25s%-10s%-15s%-10s\n", "ID", "Full Name", "Age", "Poste", "Buts");
     printf("----------------------------------------------------------------\n");
     for(int i =0; i<playersNumber; i++){
-        if(strcmp()==0){
+        if(strcmp(team[i].poste, playerPost)==0){
             printf("%-10d%-25s%-10d%-15s%-10d\n", team[i].id, team[i].fullname, team[i].age, team[i].poste, team[i].buts);
             count++;
         }
-        printf("there's %d player found\n\n");
+        
     }
+    printf("there's %d player found\n\n", count);
     return 0;
 }
 
@@ -241,7 +258,7 @@ int main() {
                         sort_by_age();
                         break;
                     case 3:
-                        printf("choose a post: \n1. gardien\n2. défenseur\n3. milieu\n4. attaquant \n choose a number: \n");
+                        printf("choose a post: \n1. gardien\n2. défenseur\n3. milieu\n4. attaquant \n choose a number: ");
                         scanf("%d", &afficheChoose);
                         switch (afficheChoose)
                         {
