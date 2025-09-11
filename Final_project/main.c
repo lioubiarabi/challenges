@@ -3,6 +3,7 @@
 
 int playersNumber=5;
 int playerId =1005; 
+
 struct player {
     int id;
     char fullname[50];
@@ -42,7 +43,7 @@ struct player add() {
             strcpy(team[playersNumber].poste, "gardien");
         break;
         case 2:
-            strcpy(team[playersNumber].poste, "défenseur");
+            strcpy(team[playersNumber].poste, "defenseur");
         break;
         case 3:
             strcpy(team[playersNumber].poste, "milieu");
@@ -72,6 +73,12 @@ int affiche(){
     return 0;
 }
 
+int *search_by_name(char *keyword){
+    int searchIndex[25], count=-1;
+    for(int i=0; i<playersNumber; i++)
+        if(strstr(team[i].fullname, keyword) == 0)
+            searchIndex[count++]=i;
+}
 
 
 int main() {
@@ -86,7 +93,7 @@ int main() {
         printf("6. Statistiques \n");
         printf("7. Quitter\n");
         
-        printf("Choisissez un numéro: ");
+        printf("Choisissez un numero: ");
         scanf("%d",&choose);
         
         switch(choose){
@@ -102,6 +109,35 @@ int main() {
             break;
             case 2:
                 affiche();
+            break;
+            case 3:
+                
+            break;
+            case 4:
+
+            break;
+            case 5:
+                char keyword[50];
+                int playerIndex;
+                printf("-- Search for a player --\n");
+                printf("enter the player name: ");
+                getchar();
+                scanf("%[^\n]", keyword);
+                int *searchIndexResults = search_by_name(keyword);
+                int sizeOfSearch = sizeof(searchIndexResults)/sizeof(searchIndexResults[0]);
+                if(sizeOfSearch == 0) printf("There's no search releted to %s", keyword);
+                else {
+                    printf("\n%-10s%-25s%-10s%-15s%-10s\n", "ID", "Full Name", "Age", "Poste", "Buts");
+                    printf("----------------------------------------------------------------\n");
+                    for(int i=0; i<sizeOfSearch; i++){
+                        playerIndex = searchIndexResults[i];
+                        printf("%-10d%-25s%-10d%-15s%-10d\n", team[playerIndex].id, team[playerIndex].fullname, team[playerIndex].age, team[playerIndex].poste, team[playerIndex].buts);
+                    }
+                    
+                }
+            break;
+            case 6:
+
             break;
             case 7:
                 break;
