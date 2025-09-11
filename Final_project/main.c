@@ -68,7 +68,40 @@ struct player add() {
     return team[playersNumber-1];
 }
 
-int affiche(){
+int sort_by_name(){
+    struct player temp;
+    for (int i = 0; i < playersNumber-1; i++){
+        for(int j=i; j<playersNumber-1-i; j++){
+            if(strcasecmp(team[j].fullname , team[j+1].fullname) >0){
+                temp = team[j];
+                team[j]= team[j+1];
+                team[j+1]=temp;
+            }
+        }
+    }
+
+    printf("--- showing all the players ---\n\n");
+    printf("%-10s%-25s%-10s%-15s%-10s\n", "ID", "Full Name", "Age", "Poste", "Buts");
+    printf("----------------------------------------------------------------\n");
+    for(int i=0; i<playersNumber; i++){
+        printf("%-10d%-25s%-10d%-15s%-10d\n", team[i].id, team[i].fullname, team[i].age, team[i].poste, team[i].buts);
+    }
+    
+    return 0;
+    
+}
+
+int sort_by_age(){
+    struct player temp;
+    for(int i=0; i<playersNumber-1; i++){
+        for(int j=0; j<playersNumber-1-j; j++ ){
+            if(team[j].age > team[j+1].age){
+                temp = team[j];
+                team[j] = team[j+1];
+                team[j+1] = temp;
+            }
+        }
+    }
     printf("--- showing all the players ---\n\n");
     printf("%-10s%-25s%-10s%-15s%-10s\n", "ID", "Full Name", "Age", "Poste", "Buts");
     printf("----------------------------------------------------------------\n");
@@ -76,7 +109,22 @@ int affiche(){
         printf("%-10d%-25s%-10d%-15s%-10d\n", team[i].id, team[i].fullname, team[i].age, team[i].poste, team[i].buts);
     }
     return 0;
+    }
+
+int sort_by_post(int poste){
+    int count;
+    printf("\n%-10s%-25s%-10s%-15s%-10s\n", "ID", "Full Name", "Age", "Poste", "Buts");
+    printf("----------------------------------------------------------------\n");
+    for(int i =0; i<playersNumber; i++){
+        if(strcmp()==0){
+            printf("%-10d%-25s%-10d%-15s%-10d\n", team[i].id, team[i].fullname, team[i].age, team[i].poste, team[i].buts);
+            count++;
+        }
+        printf("there's %d player found\n\n");
+    }
+    return 0;
 }
+
 
 struct search search_by_name(char *keyword){
     struct search newSearch;
@@ -97,6 +145,7 @@ int search_by_id(int target){
             return i;
     return -1;
 }
+
 
 int modify(int index){
     int chooseModify;
@@ -180,8 +229,44 @@ int main() {
                     printf("%s added successfuly! ID: %d\n", newPlayer.fullname, newPlayer.id );
                 }
             break;
-            case 2:
-                affiche();
+            case 2: // show the players list
+                int afficheChoose;
+                printf("show players by: \n1. Name\n2. Age\n3. Poste\n choose a number: ");
+                scanf("%d", &afficheChoose);
+                switch(afficheChoose){
+                    case 1:
+                        sort_by_name();
+                        break;
+                    case 2:
+                        sort_by_age();
+                        break;
+                    case 3:
+                        printf("choose a post: \n1. gardien\n2. défenseur\n3. milieu\n4. attaquant \n choose a number: \n");
+                        scanf("%d", &afficheChoose);
+                        switch (afficheChoose)
+                        {
+                        case 1:
+                            sort_by_post(1);
+                            break;
+                        case 2:
+                            sort_by_post(2);
+                            break;
+                        case 3:
+                            sort_by_post(3);
+                            break;
+                        case 4:
+                            sort_by_post(4);
+                            break;
+                        
+                        default:
+                        printf("you choosed the wrong number!\n");
+                            break;
+                        }
+                        break;
+                    default:
+                        printf("you choosed the wrong number!\n");
+                        break;
+                }
             break;
             case 3: // modify case
                 int playerIdSearch;
@@ -209,7 +294,7 @@ int main() {
                     printf("\nthe player deleted successfuly!\n\n");
                 } 
             break;
-            case 5:
+            case 5: // searching for a player
                 int chooseSearch = 0;
                 printf("-- Search for a player --\n");
                 printf("1. search by name\n2. search by ID\n choose a number: ");
@@ -313,8 +398,10 @@ int main() {
                     printf("\n%-10s%-25s%-10s%-15s%-10s\n", "ID", "Full Name", "Age", "Poste", "Buts");
                     printf("----------------------------------------------------------------\n");
                     for(int i =0; i<playersNumber; i++){
-                        printf("%-10d%-25s%-10d%-15s%-10d\n", team[i].id, team[i].fullname, team[i].age, team[i].poste, team[i].buts);
-                        countPlayersWithGoals++;
+                        if(team[i].buts >= minGoals){
+                            printf("%-10d%-25s%-10d%-15s%-10d\n", team[i].id, team[i].fullname, team[i].age, team[i].poste, team[i].buts);
+                            countPlayersWithGoals++;
+                        }
                     }
                     printf("\nthere's %d with a minimum goals: %d\n\n", countPlayersWithGoals, minGoals);
 
