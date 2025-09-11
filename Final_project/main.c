@@ -145,6 +145,14 @@ int modify(int index){
     }
 }
 
+int deletePlayer(int index){
+    for(int i=index; i<playersNumber-1; i++){
+        team[i]=team[i+1];
+    }
+    playersNumber--;
+    return 1;
+}
+
 
 int main() {
     int choose =0;
@@ -175,7 +183,7 @@ int main() {
             case 2:
                 affiche();
             break;
-            case 3:
+            case 3: // modify case
                 int playerIdSearch;
                 printf("-- Modify informations --\n");
                 printf("Enter the player ID: ");
@@ -189,8 +197,17 @@ int main() {
                     printf("%-10d%-25s%-10d%-15s%-10d\n", team[targetIndex].id, team[targetIndex].fullname, team[targetIndex].age, team[targetIndex].poste, team[targetIndex].buts);
                 }
             break;
-            case 4:
-
+            case 4: // delete case
+                int DeleteSearch;
+                printf("-- delete a player --\n");
+                printf("Enter the player ID: ");
+                scanf("%d", &DeleteSearch);
+                int deleteIndex = search_by_id(DeleteSearch);
+                if(deleteIndex == -1) printf("can't find the player by id\n");
+                else{
+                    deletePlayer(deleteIndex);
+                    printf("\nthe player deleted successfuly!\n\n");
+                } 
             break;
             case 5:
                 int chooseSearch = 0;
@@ -239,8 +256,8 @@ int main() {
                 }
                 
             break;
-            case 6:
-
+            case 6: //statics
+                printf("-- Search for a player --\n");
             break;
             case 7:
                 break;
