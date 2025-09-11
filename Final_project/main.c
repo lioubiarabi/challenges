@@ -12,6 +12,11 @@ struct player {
     char poste[50] ;
     int buts;
     };
+
+struct search {
+    int indices[25];
+    int count;
+};
     
 struct player team[25]={{1000, "Messi Lionel", 38, 10, "Attaquant", 823},
         {1001, "Ronaldo Cristiano", 39, 7, "Attaquant", 895},
@@ -73,16 +78,29 @@ int affiche(){
     return 0;
 }
 
-int *search_by_name(char *keyword){
-    int searchIndex[25], count=-1;
+struct search search_by_name(char *keyword){
+    struct search newSearch;
+    int counter =0;
     for(int i=0; i<playersNumber; i++)
-        if(strstr(team[i].fullname, keyword) == 0)
-            searchIndex[count++]=i;
+        if(strstr(team[i].fullname, keyword) != 0){
+            newSearch.indices[counter]=i;
+            counter++;
+        }
+        newSearch.count = counter;
+
+        return newSearch;
+}
+
+int search_by_id(int target){
+    for(int i=0; i<playersNumber; i++)
+        if(team[i].id == target)
+            return i;
+    return -1;
 }
 
 
 int main() {
-    int choose;
+    int choose =0;
     while(choose!=7){
         printf("--- dashboard ---\n");
         printf("1. Ajouter un joueur\n");
@@ -117,24 +135,51 @@ int main() {
 
             break;
             case 5:
-                char keyword[50];
-                int playerIndex;
+                int chooseSearch = 0;
                 printf("-- Search for a player --\n");
-                printf("enter the player name: ");
-                getchar();
-                scanf("%[^\n]", keyword);
-                int *searchIndexResults = search_by_name(keyword);
-                int sizeOfSearch = sizeof(searchIndexResults)/sizeof(searchIndexResults[0]);
-                if(sizeOfSearch == 0) printf("There's no search releted to %s", keyword);
-                else {
-                    printf("\n%-10s%-25s%-10s%-15s%-10s\n", "ID", "Full Name", "Age", "Poste", "Buts");
-                    printf("----------------------------------------------------------------\n");
-                    for(int i=0; i<sizeOfSearch; i++){
-                        playerIndex = searchIndexResults[i];
-                        printf("%-10d%-25s%-10d%-15s%-10d\n", team[playerIndex].id, team[playerIndex].fullname, team[playerIndex].age, team[playerIndex].poste, team[playerIndex].buts);
-                    }
+                printf("1. search by name\n2. search by ID\n choose a number: ");
+                scanf("%d", &chooseSearch);
+                switch (chooseSearch)
+                {
+                case 1:
+                    char keyword[50];
+                    int playerIndex;
                     
+                    printf("enter the player name: ");
+                    getchar();
+                    scanf("%[^\n]", keyword);
+                    struct search newSearch = search_by_name(keyword);
+                    if(newSearch.count== 0) printf("There's no search releted to %s\n\n", keyword);
+                    else {
+                        printf("\n%-10s%-25s%-10s%-15s%-10s\n", "ID", "Full Name", "Age", "Poste", "Buts");
+                        printf("----------------------------------------------------------------\n");
+                        for(int i = 0; i < newSearch.count; i++){
+                            playerIndex = newSearch.indices[i];
+                            printf("%-10d%-25s%-10d%-15s%-10d\n", team[playerIndex].id, team[playerIndex].fullname, team[playerIndex].age, team[playerIndex].poste, team[playerIndex].buts);
+                        }
+                        printf("\n%d search results relted\n\n", newSearch.count);
+                    }
+                    break;
+                case 2:
+                    int targetId;
+                    printf("entre the player id: ");
+                    scanf("%d", &targetId);
+                    int targetIndex = search_by_id(targetId);
+                    if(targetIndex == -1) printf("can't find the player by id");
+                    else {
+                        printf("\n%-10s%-25s%-10s%-15s%-10s\n", "ID", "Full Name", "Age", "Poste", "Buts");
+                        printf("----------------------------------------------------------------\n");
+                        printf("%-10d%-25s%-10d%-15s%-10d\n", team[targetIndex].id, team[targetIndex].fullname, team[targetIndex].age, team[targetIndex].poste, team[targetIndex].buts);
+                    }
+                    printf("\n");
+
+                    break;
+                
+                default:
+                printf("you didn't choose the correct number!\n");
+                    break;
                 }
+                
             break;
             case 6:
 
