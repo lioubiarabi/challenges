@@ -98,6 +98,53 @@ int search_by_id(int target){
     return -1;
 }
 
+int modify(int index){
+    int chooseModify;
+    printf("1. modifier le poste\n2. modifier l'age\n3. modifier le nombre de buts \n choose a number: ");
+    scanf("%d", &chooseModify);
+    switch (chooseModify)
+    {
+    case 1:
+        int newPosteModify;
+        printf("\n1. gardien\n2. défenseur\n3. milieu\n4. attaquant \n ");
+        while(newPosteModify>4 || newPosteModify <1){
+            printf("Choose a number: ");
+            scanf("%d", &newPosteModify);
+        }
+        switch(newPosteModify){
+            case 1:
+                strcpy(team[index].poste, "gardien");
+            break;
+            case 2:
+                strcpy(team[index].poste, "defenseur");
+            break;
+            case 3:
+                strcpy(team[index].poste, "milieu");
+            break;
+            case 4:
+                strcpy(team[index].poste, "attaquant");
+            break;
+            
+        }
+        return 1;
+        break;
+    case 2:
+        printf("entre the new age: ");
+        scanf("%d", &team[index].age);
+        return 1;
+        break;
+    case 3:
+        printf("entrer le nombre de buts: ");
+        scanf("%d", &team[index].buts);
+        return 1;
+        break;
+    default:
+        printf("choose a correct number \n\n");
+        modify(index);
+        break;
+    }
+}
+
 
 int main() {
     int choose =0;
@@ -129,7 +176,18 @@ int main() {
                 affiche();
             break;
             case 3:
-                
+                int playerIdSearch;
+                printf("-- Modify informations --\n");
+                printf("Enter the player ID: ");
+                scanf("%d", &playerIdSearch);
+                int targetIndex = search_by_id(playerIdSearch);
+                if(targetIndex == -1) printf("can't find the player by id\n");
+                else {
+                    modify(targetIndex);
+                    printf("\n%-10s%-25s%-10s%-15s%-10s\n", "ID", "Full Name", "Age", "Poste", "Buts");
+                    printf("----------------------------------------------------------------\n");
+                    printf("%-10d%-25s%-10d%-15s%-10d\n", team[targetIndex].id, team[targetIndex].fullname, team[targetIndex].age, team[targetIndex].poste, team[targetIndex].buts);
+                }
             break;
             case 4:
 
