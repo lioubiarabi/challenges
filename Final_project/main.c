@@ -157,7 +157,7 @@ int deletePlayer(int index){
 int main() {
     int choose =0;
     while(choose!=7){
-        printf("--- dashboard ---\n");
+        printf("--- Dashboard ---\n");
         printf("1. Ajouter un joueur\n");
         printf("2. Afficher la liste de tous les joueurs \n");
         printf("3. Modifier un joueur\n");
@@ -251,15 +251,81 @@ int main() {
                     break;
                 
                 default:
-                printf("you didn't choose the correct number!\n");
+                    printf("you didn't choose the correct number!\n");
                     break;
                 }
                 
             break;
             case 6: //statics
-                printf("-- Search for a player --\n");
+                int chooseStatics;
+                printf("-- statics --\n");
+                if(playersNumber == 0){
+                    printf("there's no players for the statics\n");
+                    continue;
+                }
+
+                printf("1. team statics\n2. players by goals\n choose a number: ");
+                scanf("%d", &chooseStatics);
+
+                switch (chooseStatics)
+                {
+                case 1:
+                    int totalAge =0;
+                    int minAge = team[0].age;
+                    int minIndex=0;
+                    int maxAge = team[0].age;
+                    int maxIndex=0;
+                    int maxGoals = team[0].buts;
+                    int GoalerIndex = 0;
+
+                    for(int i=0; i<playersNumber; i++){
+                        totalAge += team[i].age; // for the average age
+                        if(team[i].age < minAge) { // for the youngest player
+                            minAge = team[i].age;
+                            minIndex = i;
+                        }
+                        if(team[i].age > maxAge) { // for the oldest player
+                            maxAge = team[i].age;
+                            maxIndex = i;
+                        }
+                        if(team[i].buts > maxGoals) { // for the goaler
+                            maxGoals = team[i].buts;
+                            GoalerIndex = i;
+                        }
+
+                    }
+
+                    // players number
+                    printf("the total number of the players: %d\n", playersNumber);
+                    //the goaler
+                    printf("the best goaler of the team: %s\n", team[GoalerIndex].fullname);
+                    // players average age
+                    printf("the average age: %d\n", totalAge/playersNumber);
+                    //youngest and older players
+                    printf("the youngest player is %s\n", team[minIndex].fullname);
+                    //youngest and older players
+                    printf("the oldest player is %s\n", team[maxIndex].fullname);
+                    break;
+                case 2:
+                    int minGoals, countPlayersWithGoals = 0;
+                    printf("enter the minimum goals: ");
+                    scanf("%d", &minGoals);
+                    printf("\n%-10s%-25s%-10s%-15s%-10s\n", "ID", "Full Name", "Age", "Poste", "Buts");
+                    printf("----------------------------------------------------------------\n");
+                    for(int i =0; i<playersNumber; i++){
+                        printf("%-10d%-25s%-10d%-15s%-10d\n", team[i].id, team[i].fullname, team[i].age, team[i].poste, team[i].buts);
+                        countPlayersWithGoals++;
+                    }
+                    printf("\nthere's %d with a minimum goals: %d\n\n", countPlayersWithGoals, minGoals);
+
+                    break;
+                default:
+                    printf("you didn't choose the correct number!\n");
+                    break;
+                }
             break;
-            case 7:
+
+            case 7: // exit
                 break;
             break;
             default:
